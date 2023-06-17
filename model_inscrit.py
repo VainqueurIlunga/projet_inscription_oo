@@ -5,6 +5,10 @@ class User(ABC):
     def __init__(self,categorie_compte):
         super().__init__()
         self.cat_compte = categorie_compte
+        self.id= self.gen_id()
+    @staticmethod
+    def gen_id():
+        return str(uuid.uuid4())
     
     @abstractmethod
     def seConnecter(self):
@@ -58,14 +62,20 @@ class Etudiant(User):
         print(f"la promotion : {self.etud_promtion}")
         print(f"departement :{self.etud_departement}")
         print(f"faculté: :{self.etud_faculte}")
+        print(f"le matricule de l'etudiant : {self.id}")
     
 
 
 promo=Promotion("bac3")
 fac= Faculte("informartique")
 depart= Departement("genie logiciel",fac)
-etudiant1= Etudiant("etudiant","ilunga","vainqueur",promo.promo,depart.depart_nom,fac.fac_nom)
-etudiant1.Afficher()
+etudiant1= Etudiant("etudiant","ilunga","vainqueur",promo.promo,depart.depart_nom,fac.fac_nom) 
+donne=etudiant1.Afficher()
+
+#creation de fichier
+file = open("gestion_etud.txt", "w")
+file_ecrit= file.write(str(donne))
+file.close()
 
 
 inscription1= Inscription("25-06-2023","2023-2024","tous les documents sont complet",etudiant1)
